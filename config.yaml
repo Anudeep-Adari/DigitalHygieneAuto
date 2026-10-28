@@ -1,0 +1,117 @@
+# DigitalHygieneAuto Configuration - Multi-Drive Architecture
+# Safe, high-speed organization across C:, D:, and E: drives
+
+settings:
+  dry_run: false
+  download_stabilization_seconds: 4
+  max_undo_batches: 50
+  auto_rename_collisions: true
+
+# Configured Target Locations across your system
+# Each target specifies:
+#   path: Absolute path to the folder or drive
+#   scope: 'root_only' (only cleans loose files on that root, leaving folders/projects untouched)
+#          or 'shallow' (cleans files in the folder)
+targets:
+  - path: "C:\\Users\\AAnu1\\Downloads"
+    scope: "shallow"
+    label: "User Downloads"
+
+  - path: "C:\\Users\\AAnu1\\Desktop"
+    scope: "shallow"
+    label: "User Desktop"
+
+  - path: "D:\\"
+    scope: "root_only"
+    label: "Drive D: Root Cleanup"
+
+  - path: "E:\\"
+    scope: "root_only"
+    label: "Drive E: Root Cleanup"
+
+# IRONCLAD PROTECTION BLACKLIST
+# The engine will NEVER touch, inspect, or move items matching these paths or patterns
+protected_paths:
+  - "C:\\Windows"
+  - "C:\\Program Files"
+  - "C:\\Program Files (x86)"
+  - "C:\\ProgramData"
+  - "C:\\Users\\AAnu1\\AppData"
+  - "E:\\Games"
+  - "E:\\Riot Games"
+  - "E:\\XboxGames"
+  - "E:\\WindowsApps"
+  - "E:\\WpSystem"
+
+ignore:
+  extensions:
+    - ".tmp"
+    - ".crdownload"
+    - ".part"
+    - ".download"
+    - ".ini"
+    - ".sys"
+    - ".lnk"
+  patterns:
+    - "desktop.ini"
+    - "thumbs.db"
+    - "~$*"           # Microsoft Office lock files
+    - ".git*"
+    - "node_modules"
+    - "$RECYCLE.BIN"
+    - "System Volume Information"
+
+# Smart Classification Rules
+categories:
+  - name: "Documents/Resumes"
+    keywords: ["resume", "cv", "ats", "cover letter", "overleaf"]
+    extensions: [".pdf", ".docx", ".doc"]
+
+  - name: "Documents/Certifications"
+    keywords: ["certificate", "credential", "certified", "exam", "score report", "offerletter", "experience letter"]
+    extensions: [".pdf", ".png", ".jpg", ".jpeg"]
+
+  - name: "Documents/Technical_Docs_and_SOPs"
+    keywords: ["sop", "guide", "blueprint", "roadmap", "handover", "troubleshooting", "runbook", "specification", "provisioning", "rca_sop"]
+    extensions: [".pdf", ".docx", ".html", ".md", ".txt"]
+
+  - name: "Media/Work_Shifts_and_Rosters"
+    keywords: ["shift", "noon shift", "night shift", "week", "roster", "schedule"]
+    extensions: [".png", ".jpg", ".jpeg"]
+
+  - name: "Financial_and_Expenses"
+    keywords: ["expense", "expenses", "invoice", "receipt", "fmg approval", "hdfc", "fact_pc"]
+    extensions: [".xlsx", ".xls", ".csv", ".pdf"]
+
+  - name: "Applications_and_Installers"
+    extensions: [".exe", ".msi", ".bat", ".cmd"]
+
+  - name: "Compressed_Archives"
+    extensions: [".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz", ".iso"]
+
+  - name: "Documents/PDFs"
+    extensions: [".pdf"]
+
+  - name: "Documents/Word_and_Office"
+    extensions: [".docx", ".doc", ".odt", ".rtf"]
+
+  - name: "Documents/Spreadsheets"
+    extensions: [".xlsx", ".xls", ".csv", ".tsv"]
+
+  - name: "Documents/Presentations"
+    extensions: [".pptx", ".ppt", ".key"]
+
+  - name: "Media/Images"
+    extensions: [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".svg", ".webp", ".ico", ".tiff"]
+
+  - name: "Media/Video"
+    extensions: [".mp4", ".mkv", ".mov", ".avi", ".webm", ".flv", ".wmv"]
+
+  - name: "Media/Audio"
+    extensions: [".mp3", ".wav", ".flac", ".m4a", ".aac", ".ogg"]
+
+  - name: "Code_and_Scripts"
+    extensions: [".py", ".ps1", ".sh", ".js", ".ts", ".jsx", ".tsx", ".html", ".css", ".json", ".xml", ".yaml", ".yml", ".sql"]
+
+  - name: "Text_and_Notes"
+    extensions: [".txt", ".log", ".md"]
