@@ -31,39 +31,67 @@
 ## 📌 Architecture & Routing Pipeline
 
 ```mermaid
-flowchart LR
-    subgraph Ingestion ["📥 Ingestion Streams"]
-        Downloads["Downloads Folder"]
-        Desktop["Desktop Clutter"]
+flowchart TB
+    %% Styling & Spacing
+    classDef client fill:#161b22,stroke:#58a6ff,stroke-width:2px,color:#ffffff;
+    classDef zone fill:#0d1117,stroke:#30363d,stroke-width:1.5px,color:#c9d1d9;
+    classDef security fill:#161b22,stroke:#f85149,stroke-width:2px,color:#ffffff;
+    classDef data fill:#161b22,stroke:#3fb950,stroke-width:2px,color:#ffffff;
+
+    subgraph Ingestion [" 📥 INGESTION & FILESYSTEM OBSERVATION TIER "]
+        direction LR
+        Downloads["Downloads Folder<br/><sub>Transient Web Downloads</sub>"]:::client
+        Desktop["Desktop Clutter<br/><sub>Unorganized Workspace Files</sub>"]:::client
+        TempStaging["Temp Staging Area<br/><sub>Browser & Installer Caches</sub>"]:::client
     end
 
-    subgraph Daemon ["⚙️ Event Reactor (watcher.py)"]
-        Watchdog["Watchdog File System Observer"]
-        Debounce["Write-Stabilization Debouncer\n(500ms Window)"]
+    subgraph Region1 [" ⚙️ REGION 1: EVENT REACTOR & DEBOUNCE ZONE "]
+        direction TB
+        Watchdog["Watchdog OS Event Observer<br/>• Non-Polling Windows API Hooks<br/>• Zero CPU Idle Footprint (<0.2%)"]:::client
+        Debounce["Write-Stabilization Debouncer<br/>• 500ms Buffer for Active Browser Downloads<br/>• Open File Handle Lock Detection"]:::security
     end
 
-    subgraph Classifier ["🧠 Decision Matrix (rules.py)"]
-        MIME["MIME & Magic Type Resolution"]
-        ExtMatch["Extension Routing Rules"]
-        ResumeEngine["Resume & Career Asset Analyzer\n(resume_manager.py)"]
+    subgraph Region2 [" 🧠 REGION 2: CLASSIFICATION & DECISION MATRIX "]
+        direction TB
+        MIMEClassifier["MIME & Magic Byte Detector<br/>• Deep File Signature Identification"]:::client
+        ResumeManager["Career Asset & Resume Manager<br/>• Automated CV Versioning & Timestamping<br/>• Master Portfolio Synchronizer"]:::client
+        Pruner["Empty Directory Pruner<br/>• Safe Recursive Folder Pruning"]:::client
     end
 
-    subgraph StorageHub ["🗂️ Antigravity Workspace Destination"]
-        Resumes["📁 Career Assets / Master Resumes"]
-        Docs["📁 Organized Documents & PDFs"]
-        Media["📁 Media & Assets Archive"]
-        Dev["📁 Source Code & Archives"]
+    subgraph CentralTransit [" 🛡️ CENTRAL TRANSIT: TRANSACTION & SAFETY GATEWAY "]
+        direction TB
+        JournalGateway["Atomic Move Executor<br/><sub>Transactional Safe Relocation Engine</sub>"]:::security
+        HistoryStore[("Reversible Audit Journal<br/>.history.json Ledger")]:::data
     end
 
-    subgraph Safety ["🛡️ Audit & Transaction Store"]
-        Journal[("Reversible Transaction Journal\n.history.json")]
+    subgraph StorageVaults [" 📁 TARGET STRUCTURED STORAGE VAULTS "]
+        direction LR
+        VaultResumes["📁 Career & Resumes Archive"]:::data
+        VaultDocs["📁 Structured Documents & PDFs"]:::data
+        VaultMedia["📁 Media & Asset Vault"]:::data
+        VaultDev["📁 Code & Development Projects"]:::data
     end
 
-    Ingestion --> Watchdog
-    Watchdog --> Debounce
-    Debounce --> Classifier
-    Classifier --> StorageHub
-    Classifier -.->|Audit Log & Rollback Pointer| Journal
+    %% Spacious Architectural Connections
+    Downloads -------------> Watchdog
+    Desktop ---------------> Watchdog
+    TempStaging -----------> Watchdog
+
+    Watchdog --------------> Debounce
+    Debounce --------------> MIMEClassifier
+
+    MIMEClassifier --------> ResumeManager
+    MIMEClassifier --------> Pruner
+
+    ResumeManager ---------> CentralTransit
+    Pruner ----------------> CentralTransit
+
+    JournalGateway -.->|Record Transaction SHA-256| HistoryStore
+
+    JournalGateway --------> VaultResumes
+    JournalGateway --------> VaultDocs
+    JournalGateway --------> VaultMedia
+    JournalGateway --------> VaultDev
 ```
 
 ---
