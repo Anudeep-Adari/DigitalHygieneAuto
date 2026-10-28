@@ -2,12 +2,11 @@
 
 # 🧹 DigitalHygieneAuto
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&duration=3000&pause=1000&color=2EA043&center=true&vCenter=true&width=620&lines=Autonomous+Background+Desktop+%26+Downloads+Sanitizer;Zero-Loss+Journaled+File+Classification;Intelligent+Resume+%26+Career+Asset+Versioning;Safe+Empty+Directory+Pruning+%26+Deep+Clean" alt="Typing SVG" />
-</p>
+### Autonomous Desktop Hygiene, Resume Management & Storage Reclamation Daemon
+**Python 3.10+ • Watchdog Event-Driven • Reversible SQLite/JSON Journaling • Automated Scheduling**
 
 <p align="center">
-  <strong>Intelligent, Event-Driven Desktop Hygiene, Resume Management & Storage Reclamation Daemon</strong>
+  <em>Real-time zero-polling file system sentry, automated Downloads/Desktop triage, and intelligent career asset versioning.</em>
 </p>
 
 <!-- Badges -->
