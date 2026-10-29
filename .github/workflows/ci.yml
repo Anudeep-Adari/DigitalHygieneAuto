@@ -3,14 +3,31 @@ name: DigitalHygieneAuto CI
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'assets/**'
+      - '.gitignore'
+      - '.coderabbit.yaml'
   pull_request:
     branches: [ main ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'assets/**'
+      - '.gitignore'
+      - '.coderabbit.yaml'
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   validate-scripts:
     name: Validate Automation Scripts
     runs-on: ubuntu-latest
+    timeout-minutes: 3
 
     steps:
       - name: Checkout Repository
